@@ -1,0 +1,174 @@
+.awemenu-classic {
+  /* Mobile */
+}
+.awemenu-classic .awemenu-container {
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fefefe;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#c1c1c1));
+  background-image: -webkit-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -moz-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -ms-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -o-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: linear-gradient(top, #fefefe, #c1c1c1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fefefe', endColorStr='#c1c1c1');
+}
+.awemenu-classic .awemenu-bars {
+  border: 1px solid #fff;
+  width: 30px;
+  height: 30px;
+  line-height: 28px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  float: right;
+}
+.awemenu-classic .awemenu-bars span {
+  height: 2px;
+  width: 14px;
+  margin: auto;
+  position: absolute;
+  display: block;
+  font-size: 14px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+}
+.awemenu-classic .awemenu-bars span:before, .awemenu-classic .awemenu-bars span:after {
+  height: 2px;
+  content: '';
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-color: #fff;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.awemenu-classic .awemenu-bars span:before {
+  top: -4px;
+}
+.awemenu-classic .awemenu-bars span:after {
+  bottom: -4px;
+}
+.awemenu-classic .awemenu-active .awemenu-bars span {
+  background-color: transparent;
+}
+.awemenu-classic .awemenu-active .awemenu-bars span:before {
+  top: 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.awemenu-classic .awemenu-active .awemenu-bars span:after {
+  bottom: 0;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.awemenu-classic .awemenu > .awemenu-item > a {
+  line-height: 60px;
+  padding-left: 25px;
+  padding-right: 25px;
+  color: #000;
+  font-size: 12px;
+  position: relative;
+  display: block;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.awemenu-classic .awemenu > .awemenu-item:hover > a, .awemenu-classic .awemenu > .awemenu-item.awemenu-active > a {
+  background-color: #c1c1c1;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#c1c1c1), to(#fefefe));
+  background-image: -webkit-linear-gradient(top, #c1c1c1, #fefefe);
+  background-image: -moz-linear-gradient(top, #c1c1c1, #fefefe);
+  background-image: -ms-linear-gradient(top, #c1c1c1, #fefefe);
+  background-image: -o-linear-gradient(top, #c1c1c1, #fefefe);
+  background-image: linear-gradient(top, #c1c1c1, #fefefe);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#c1c1c1', endColorStr='#fefefe');
+}
+.awemenu-classic .awemenu .awemenu-submenu {
+  background-color: #fff;
+}
+.awemenu-classic .awemenu .awemenu-submenu .awemenu-item > a {
+  padding: 20px 30px;
+  border-bottom: 1px solid #ebebeb;
+  display: block;
+  font-size: 13px;
+  color: #000;
+  text-decoration: none;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.awemenu-classic .awemenu .awemenu-submenu .awemenu-item > a .awemenu-arrow {
+  margin-top: 6px;
+}
+.awemenu-classic .awemenu .awemenu-submenu .awemenu-item:last-child > a {
+  border-bottom: 0;
+}
+.awemenu-classic .awemenu .awemenu-submenu .awemenu-item.awemenu-invert > .awemenu-submenu {
+  border-left: 0;
+  border-right: 1px solid #eee;
+}
+.awemenu-classic .awemenu .awemenu-submenu .awemenu-item:hover > a {
+  color: #fff;
+  background-color: #3b3b3b;
+}
+.awemenu-classic .awemenu .awemenu-submenu .awemenu-item .awemenu-submenu {
+  border-left: 1px solid #eee;
+  width: 100%;
+}
+.awemenu-classic.awemenu-mobile .awemenu-container {
+  padding: 10px 15px;
+}
+.awemenu-classic.awemenu-mobile .awemenu-container .awemenu {
+  background-color: #292c33;
+}
+.awemenu-classic.awemenu-mobile .awemenu-container .awemenu .awemenu-item > a {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 15px 20px;
+  line-height: 20px;
+  color: #fff;
+  text-transform: capitalize;
+  text-decoration: none;
+  display: block;
+}
+.awemenu-classic.awemenu-mobile .awemenu-container .awemenu .awemenu-item > a .awemenu-arrow {
+  margin-top: 4px;
+}
+.awemenu-classic.awemenu-mobile .awemenu-container .awemenu .awemenu-item > a:before, .awemenu-classic.awemenu-mobile .awemenu-container .awemenu .awemenu-item > a:after {
+  display: none;
+}
+.awemenu-classic.awemenu-mobile .awemenu-container .awemenu .awemenu-item .awemenu-submenu {
+  background-color: #fefefe;
+  padding: 0 15px;
+}
+.awemenu-classic.awemenu-mobile .awemenu-container .awemenu .awemenu-item .awemenu-submenu.awemenu-megamenu {
+  padding: 0;
+}
+.awemenu-classic.awemenu-mobile .awemenu-container .awemenu .awemenu-item .awemenu-submenu .awemenu-item > a {
+  padding-left: 0;
+  padding-right: 0;
+  color: #000;
+}

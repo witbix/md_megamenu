@@ -1,0 +1,138 @@
+.awemenu-fullscreen {
+  background-color: #629aa9;
+  padding: 15px;
+}
+.awemenu-fullscreen .awemenu-bars {
+  color: #fff;
+}
+.awemenu-fullscreen .awemenu-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.awemenu-fullscreen .awemenu-close .amm-clear {
+  font-size: 40px;
+}
+.awemenu-fullscreen .awemenu .awemenu-item > a {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  padding: 38px 15px;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.2em;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.awemenu-fullscreen .awemenu .awemenu-item > a span {
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  display: block;
+  margin-bottom: 5px;
+  text-transform: none;
+  line-height: normal;
+  letter-spacing: 0;
+}
+.awemenu-fullscreen .awemenu > .awemenu-item:hover > a {
+  padding: 50px 15px;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.awemenu-fullscreen .awemenu .awemenu-submenu {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.awemenu-fullscreen .awemenu .awemenu-submenu .awemenu-item > a {
+  font-size: 18px;
+  padding: 15px;
+}
+
+.awemenu-fullscreen-wrapper {
+  background-color: rgba(98, 154, 169, 0.95);
+  padding: 40px 0;
+}
+.awemenu-fullscreen-wrapper .awemenu-megamenu {
+  background-color: #fff;
+}
+
+/* Effect link */
+.awemenu-fullscreen .awemenu .awemenu-item {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: translate(0, 40px);
+  -moz-transform: translate(0, 40px);
+  -ms-transform: translate(0, 40px);
+  -o-transform: translate(0, 40px);
+  transform: translate(0, 40px);
+  -webkit-transition: all 0.6s ease;
+  -moz-transition: all 0.6s ease;
+  -ms-transition: all 0.6s ease;
+  -o-transition: all 0.6s ease;
+  transition: all 0.6s ease;
+}
+.awemenu-fullscreen .awemenu > li:nth-of-type(1) {
+  -webkit-transition-delay: 0.6s;
+  -moz-transition-delay: 0.6s;
+  -ms-transition-delay: 0.6s;
+  -o-transition-delay: 0.6s;
+  transition-delay: 0.6s;
+}
+.awemenu-fullscreen .awemenu > li:nth-of-type(2) {
+  -webkit-transition-delay: 0.75s;
+  -moz-transition-delay: 0.75s;
+  -ms-transition-delay: 0.75s;
+  -o-transition-delay: 0.75s;
+  transition-delay: 0.75s;
+}
+.awemenu-fullscreen .awemenu > li:nth-of-type(3) {
+  -webkit-transition-delay: 0.9s;
+  -moz-transition-delay: 0.9s;
+  -ms-transition-delay: 0.9s;
+  -o-transition-delay: 0.9s;
+  transition-delay: 0.9s;
+}
+.awemenu-fullscreen .awemenu > li:nth-of-type(4) {
+  -webkit-transition-delay: 1.05s;
+  -moz-transition-delay: 1.05s;
+  -ms-transition-delay: 1.05s;
+  -o-transition-delay: 1.05s;
+  transition-delay: 1.05s;
+}
+.awemenu-fullscreen .awemenu > li:nth-of-type(5) {
+  -webkit-transition-delay: 1.2s;
+  -moz-transition-delay: 1.2s;
+  -ms-transition-delay: 1.2s;
+  -o-transition-delay: 1.2s;
+  transition-delay: 1.2s;
+}
+
+.awemenu-active.awemenu-fullscreen .awemenu .awemenu-item {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+/* Effect wrapper */
+.awemenu-fullscreen-wrapper {
+  top: 50%;
+  opacity: 0;
+  -webkit-transition: all 0.6s ease;
+  -moz-transition: all 0.6s ease;
+  -ms-transition: all 0.6s ease;
+  -o-transition: all 0.6s ease;
+  transition: all 0.6s ease;
+}
+
+.awemenu-active .awemenu-fullscreen-wrapper {
+  top: 0;
+  opacity: 1;
+}

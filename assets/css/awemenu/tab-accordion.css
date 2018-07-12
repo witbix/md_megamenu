@@ -1,0 +1,108 @@
+.awe-tabs:before, .awe-tabs:after {
+  display: table;
+  content: '';
+  clear: both;
+}
+
+/* Accordion and tabs */
+.acc-panel-title {
+  margin: 0;
+}
+.acc-panel-title a {
+  display: block;
+  padding: 18px 15px;
+  border: 1px solid #eee;
+  background-color: #fff;
+  color: #000;
+  font-size: 14px;
+  line-height: normal;
+}
+.acc-panel-title .fa, .acc-panel-title .icon {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.acc-panel-collapse {
+  display: none;
+}
+.acc-panel-collapse .acc-panel-body {
+  padding: 20px 0;
+}
+
+.acc-header-icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  -webkit-transform: translate(0, -50%);
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.acc-panel-heading {
+  position: relative;
+}
+.acc-panel-heading.active .acc-panel-title a {
+  background-color: #f9f9f9;
+}
+
+.tabs-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tabs-nav li {
+  display: inline-block;
+}
+.tabs-nav li a {
+  display: block;
+  padding: 10px 15px;
+  border: 1px solid #eee;
+  background-color: #fff;
+  color: #000;
+  font-size: 14px;
+}
+.tabs-nav li .fa, .tabs-nav li .icon, .tabs-nav li i {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.tabs-nav.tabs-top {
+  margin-bottom: 15px;
+}
+.tabs-nav.tabs-bottom {
+  margin-top: 15px;
+}
+.tabs-nav.tabs-left, .tabs-nav.tabs-right {
+  width: 200px;
+}
+.tabs-nav.tabs-left li, .tabs-nav.tabs-right li {
+  display: block;
+}
+.tabs-nav.tabs-left {
+  float: left;
+  margin-right: 20px;
+}
+.tabs-nav.tabs-right {
+  float: right;
+  margin-left: 20px;
+}
+
+.tabs-content {
+  overflow: hidden;
+}
+
+.tabs-panel {
+  display: none;
+}
+
+/* Right to left */
+.awemenu-rtl .acc-header-icon {
+  right: auto;
+  left: 15px;
+}

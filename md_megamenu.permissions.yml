@@ -1,0 +1,8 @@
+admin megamenu:
+  title: 'Turn on/off megamenu'
+  description: 'Enable or disable megamenu for specific menu'
+  restrict access: TRUE
+
+build megamenu:
+  title: 'Build megamenu'
+  restrict access: TRUE

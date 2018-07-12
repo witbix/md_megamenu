@@ -1,0 +1,56 @@
+<?php
+use Drupal\image\Entity\ImageStyle;
+
+/**
+ * Implements hook_schema().
+ */
+function md_megamenu_schema() {
+  $schema['md_megamenu_items'] = array(
+    'description' => 'megamenu items table',
+    'fields' =>  array(
+      'id' => array(
+        'description' =>  'Primary key for identify a megamenu.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'mid' => array(
+        'description' =>  'id of menu item content',
+        'type' => 'varchar',
+        'length' => 500,       
+        'not null' => TRUE,
+      ),
+      'title' => array(
+        'description' =>  'id of menu item content',
+        'type' => 'varchar',
+        'length' => 256,       
+        'not null' => false,
+      ),
+      'type' => array(
+        'description' =>  'type of menu item',
+        'type' => 'varchar',
+        'length' => 20,       
+        'not null' => false,
+      ),
+      'data' => array(
+        'description' => 'data of menuitem',
+        'type' => 'blob',
+        'size' => 'big',
+        'not null' => false,
+      )
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(
+      'mid' => array('mid')
+    )
+  );
+
+  return $schema;
+}
+
+function md_megamenu_uninstall() {
+  // Remove the css directory
+  //file_unmanaged_delete_recursive(file_default_scheme() . '://md-slider-css');
+  // Remove image style md_slider_thumb
+  //ImageStyle::load('md_slider_thumb')->delete();
+}

@@ -1,0 +1,14 @@
+.awemenu-default-color-8.awemenu-default.awemenu-nav, .awemenu-default-color-8.awemenu-default.awemenu-mobile {
+  background-color: #a0ac48;
+}
+.awemenu-default-color-8.awemenu-default.awemenu-nav .awemenu-dropdown .awemenu-item:hover > a {
+  color: #a0ac48;
+}
+.awemenu-default-color-8.awemenu-default .awemenu-outleft .awemenu,
+.awemenu-default-color-8.awemenu-default .awemenu-outright .awemenu,
+.awemenu-default-color-8.awemenu-default .awemenu-mobile .awemenu {
+  background-color: #a0ac48;
+}
+.awemenu-default-color-8.awemenu-default .awemenu-fullscreen-wrapper {
+  background-color: rgba(160, 172, 72, 0.95);
+}

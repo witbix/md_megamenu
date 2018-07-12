@@ -1,0 +1,47 @@
+.awemenu-classic-color-4.awemenu-classic .awemenu-container {
+  background-color: #789a47;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#789a47), to(#598914));
+  background-image: -webkit-linear-gradient(top, #789a47, #598914);
+  background-image: -moz-linear-gradient(top, #789a47, #598914);
+  background-image: -ms-linear-gradient(top, #789a47, #598914);
+  background-image: -o-linear-gradient(top, #789a47, #598914);
+  background-image: linear-gradient(top, #789a47, #598914);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#789a47', endColorStr='#598914');
+}
+.awemenu-classic-color-4.awemenu-classic .awemenu-left .awemenu,
+.awemenu-classic-color-4.awemenu-classic .awemenu-right .awemenu,
+.awemenu-classic-color-4.awemenu-classic .awemenu-outleft .awemenu,
+.awemenu-classic-color-4.awemenu-classic .awemenu-outright .awemenu {
+  background-color: #789a47;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#789a47), to(#598914));
+  background-image: -webkit-linear-gradient(top, #789a47, #598914);
+  background-image: -moz-linear-gradient(top, #789a47, #598914);
+  background-image: -ms-linear-gradient(top, #789a47, #598914);
+  background-image: -o-linear-gradient(top, #789a47, #598914);
+  background-image: linear-gradient(top, #789a47, #598914);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#789a47', endColorStr='#598914');
+}
+.awemenu-classic-color-4.awemenu-classic .awemenu-left .awemenu > .awemenu-item > a,
+.awemenu-classic-color-4.awemenu-classic .awemenu-right .awemenu > .awemenu-item > a,
+.awemenu-classic-color-4.awemenu-classic .awemenu-outleft .awemenu > .awemenu-item > a,
+.awemenu-classic-color-4.awemenu-classic .awemenu-outright .awemenu > .awemenu-item > a {
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.awemenu-classic-color-4.awemenu-classic .awemenu > .awemenu-item > a {
+  color: #fff;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+.awemenu-classic-color-4.awemenu-classic .awemenu > .awemenu-item:hover > a, .awemenu-classic-color-4.awemenu-classic .awemenu > .awemenu-item.awemenu-active > a {
+  color: #fff;
+  background-color: #598914;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#598914), to(#789a47));
+  background-image: -webkit-linear-gradient(top, #598914, #789a47);
+  background-image: -moz-linear-gradient(top, #598914, #789a47);
+  background-image: -ms-linear-gradient(top, #598914, #789a47);
+  background-image: -o-linear-gradient(top, #598914, #789a47);
+  background-image: linear-gradient(top, #598914, #789a47);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#598914', endColorStr='#789a47');
+}

@@ -1,0 +1,19 @@
+.awemenu-default {
+  /* Mobile */
+}
+.awemenu-default.awemenu-outleft, .awemenu-default.awemenu-outright {
+  padding: 15px;
+}
+.awemenu-default.awemenu-outleft .awemenu, .awemenu-default.awemenu-outright .awemenu {
+  background-color: #03a9f4;
+}
+.awemenu-default.awemenu-outleft .awemenu > .awemenu-item > a, .awemenu-default.awemenu-outright .awemenu > .awemenu-item > a {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 15px 20px;
+  line-height: 20px;
+}
+.awemenu-default.awemenu-mobile-outleft .awemenu, .awemenu-default.awemenu-mobile-outright .awemenu {
+  width: 300px;
+}

@@ -1,0 +1,10 @@
+<li {{ attributes }}>
+    <a href="{{url}}" {% if link_system_path %} data-drupal-link-system-path="{{ link_system_path }}" {% endif %}>{{ el_title|raw }}</a>
+    {% if main['type'] and main['type'] != 'normal' %}
+        <ul class="awemenu-submenu {{(main['type'] == 'mega') ? 'awemenu-megamenu' : 'awemenu-dropdown'}}" {% if attributesUl %} {{attributesUl|join(' ')}} {% endif %}>
+        {% if main['type'] == 'mega' %}{{'<li class="awemenu-item">'}}{% endif %}
+            {{ el_content }}
+        {% if main['type'] == 'mega' %}{{'</li>'}}{% endif %}
+    </ul>
+    {% endif %}
+</li>

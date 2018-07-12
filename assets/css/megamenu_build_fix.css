@@ -1,0 +1,15 @@
+.ac_control ul{
+    margin: 0px !important; padding: 0px !important;
+}
+.ac_container{max-width: 100%;}
+html body.awecontent-layout{
+    height: auto;
+    /* fix for default toolbar*/
+    padding-top: 26px !important;
+    /* fix for admin menu toolbar*/
+    margin-top: 0px !important;
+    background-color: #eee;
+}
+#toolbar, #admin-menu, .awemenu-box-action{display: none;}
+
+.ac_creating .awemenu-nav .awemenu-item > a {border-bottom: none}

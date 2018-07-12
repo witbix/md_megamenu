@@ -1,0 +1,41 @@
+.awemenu-classic-color-8.awemenu-classic .awemenu-container {
+  background-color: #fefefe;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#c1c1c1));
+  background-image: -webkit-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -moz-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -ms-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -o-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: linear-gradient(top, #fefefe, #c1c1c1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fefefe', endColorStr='#c1c1c1');
+}
+.awemenu-classic-color-8.awemenu-classic .awemenu-left .awemenu,
+.awemenu-classic-color-8.awemenu-classic .awemenu-right .awemenu,
+.awemenu-classic-color-8.awemenu-classic .awemenu-outleft .awemenu,
+.awemenu-classic-color-8.awemenu-classic .awemenu-outright .awemenu {
+  background-color: #fefefe;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#c1c1c1));
+  background-image: -webkit-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -moz-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -ms-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -o-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: linear-gradient(top, #fefefe, #c1c1c1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fefefe', endColorStr='#c1c1c1');
+}
+.awemenu-classic-color-8.awemenu-classic .awemenu-left .awemenu > .awemenu-item > a,
+.awemenu-classic-color-8.awemenu-classic .awemenu-right .awemenu > .awemenu-item > a,
+.awemenu-classic-color-8.awemenu-classic .awemenu-outleft .awemenu > .awemenu-item > a,
+.awemenu-classic-color-8.awemenu-classic .awemenu-outright .awemenu > .awemenu-item > a {
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.awemenu-classic-color-8.awemenu-classic .awemenu > .awemenu-item:hover > a, .awemenu-classic-color-8.awemenu-classic .awemenu > .awemenu-item.awemenu-active > a {
+  background-color: #c1c1c1;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#c1c1c1), to(#fefefe));
+  background-image: -webkit-linear-gradient(top, #c1c1c1, #fefefe);
+  background-image: -moz-linear-gradient(top, #c1c1c1, #fefefe);
+  background-image: -ms-linear-gradient(top, #c1c1c1, #fefefe);
+  background-image: -o-linear-gradient(top, #c1c1c1, #fefefe);
+  background-image: linear-gradient(top, #c1c1c1, #fefefe);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#c1c1c1', endColorStr='#fefefe');
+}

@@ -1,0 +1,4 @@
+md_megamenu.builder.edit:
+  title: 'Edit Megamenu'
+  route_name: md_megamenu.build_menu
+  group: md_megamenu

@@ -1,0 +1,24 @@
+.awemenu-classic.awemenu-left .awemenu, .awemenu-classic.awemenu-right .awemenu {
+  background-color: #fefefe;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#c1c1c1));
+  background-image: -webkit-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -moz-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -ms-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: -o-linear-gradient(top, #fefefe, #c1c1c1);
+  background-image: linear-gradient(top, #fefefe, #c1c1c1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fefefe', endColorStr='#c1c1c1');
+  background-color: #fff;
+}
+.awemenu-classic.awemenu-left .awemenu > .awemenu-item > a, .awemenu-classic.awemenu-right .awemenu > .awemenu-item > a {
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 15px 20px;
+  line-height: 20px;
+}
+.awemenu-classic.awemenu-left .awemenu > .awemenu-item > a:before, .awemenu-classic.awemenu-left .awemenu > .awemenu-item > a:after, .awemenu-classic.awemenu-right .awemenu > .awemenu-item > a:before, .awemenu-classic.awemenu-right .awemenu > .awemenu-item > a:after {
+  display: none;
+}
+.awemenu-classic.awemenu-right {
+  float: right;
+}

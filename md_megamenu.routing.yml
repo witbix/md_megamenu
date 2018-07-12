@@ -1,0 +1,14 @@
+md_megamenu.build_menu:
+  path: '/admin/structure/md_megamenu/build-menu/{menu_name}'
+  defaults:
+    _title: 'Build menu system'
+    _form: '\Drupal\md_megamenu\Form\AweMegaMenuForm'
+  requirements:
+    _permission: 'build megamenu'
+md_megamenu.content.iframe:
+  path: '/md_megamenu/content-iframe'
+  defaults:
+    _title: 'Content Iframe'
+    _controller: '\Drupal\md_megamenu\Controller\MDMegamenuController::contentIframe'
+  requirements:
+    _permission: 'build megamenu'

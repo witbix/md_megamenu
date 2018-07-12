@@ -1,0 +1,381 @@
+.awemenu-animation {
+  /* Fade */
+  /* Fadeup */
+  /* Fadedown */
+  /* Fadeleft */
+  /* Faderight */
+  /* Rotatezoom */
+  /* Rotateupleft */
+  /* Rotateupright */
+  /* Flipx */
+  /* Flipy */
+  /* Flipyright */
+  /* Flipyleft */
+  /* Slideleft */
+  /* Slideright */
+  /* Fadeskew */
+  /* Scaleup */
+}
+
+.awemenu-animation .awemenu {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.awemenu-animation .awemenu-submenu {
+  display: block;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.awemenu-animation .awemenu-fade > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.awemenu-animation .awemenu-fade.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+}
+
+.awemenu-animation .awemenu-fadeup > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: translate(0, 30px);
+  -moz-transform: translate(0, 30px);
+  -ms-transform: translate(0, 30px);
+  -o-transform: translate(0, 30px);
+  transform: translate(0, 30px);
+}
+
+.awemenu-animation .awemenu-fadeup.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-fadedown > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: translate(0, -30px);
+  -moz-transform: translate(0, -30px);
+  -ms-transform: translate(0, -30px);
+  -o-transform: translate(0, -30px);
+  transform: translate(0, -30px);
+}
+
+.awemenu-animation .awemenu-fadedown.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-fadeleft > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: translate(-100px, 0);
+  -moz-transform: translate(-100px, 0);
+  -ms-transform: translate(-100px, 0);
+  -o-transform: translate(-100px, 0);
+  transform: translate(-100px, 0);
+}
+
+.awemenu-animation .awemenu-fadeleft.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-faderight > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: translate(100px, 0);
+  -moz-transform: translate(100px, 0);
+  -ms-transform: translate(100px, 0);
+  -o-transform: translate(100px, 0);
+  transform: translate(100px, 0);
+}
+
+.awemenu-animation .awemenu-faderight.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-zoom > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  -o-transform: scale(0.5);
+  transform: scale(0.5);
+}
+
+.awemenu-animation .awemenu-zoom.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-rotateupleft > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: rotate(10deg);
+  -moz-transform: rotate(10deg);
+  -ms-transform: rotate(10deg);
+  -o-transform: rotate(10deg);
+  transform: rotate(10deg);
+}
+
+.awemenu-animation .awemenu-rotateupleft.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-rotateupright > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform-origin: 100% 0;
+  -moz-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
+  -o-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+  -webkit-transform: rotate(-10deg);
+  -moz-transform: rotate(-10deg);
+  -ms-transform: rotate(-10deg);
+  -o-transform: rotate(-10deg);
+  transform: rotate(-10deg);
+}
+
+.awemenu-animation .awemenu-rotateupright.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-flipx > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform-origin: 50% 0;
+  -moz-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
+  -o-transform-origin: 50% 0;
+  transform-origin: 50% 0;
+  -webkit-transform: perspective(400em) rotateX(-45deg);
+  -moz-transform: perspective(400em) rotateX(-45deg);
+  -ms-transform: perspective(400em) rotateX(-45deg);
+  -o-transform: perspective(400em) rotateX(-45deg);
+  transform: perspective(400em) rotateX(-45deg);
+}
+
+.awemenu-animation .awemenu-flipx.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-flipy > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform-origin: 50% 0;
+  -moz-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
+  -o-transform-origin: 50% 0;
+  transform-origin: 50% 0;
+  -webkit-transform: perspective(400em) rotateY(45deg);
+  -moz-transform: perspective(400em) rotateY(45deg);
+  -ms-transform: perspective(400em) rotateY(45deg);
+  -o-transform: perspective(400em) rotateY(45deg);
+  transform: perspective(400em) rotateY(45deg);
+}
+
+.awemenu-animation .awemenu-flipy.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-flipyright > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform-origin: 100% 50%;
+  -moz-transform-origin: 100% 50%;
+  -ms-transform-origin: 100% 50%;
+  -o-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  -webkit-transform: perspective(400em) rotateY(45deg);
+  -moz-transform: perspective(400em) rotateY(45deg);
+  -ms-transform: perspective(400em) rotateY(45deg);
+  -o-transform: perspective(400em) rotateY(45deg);
+  transform: perspective(400em) rotateY(45deg);
+}
+
+.awemenu-animation .awemenu-flipyright.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-flipyleft > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform-origin: 0 50%;
+  -moz-transform-origin: 0 50%;
+  -ms-transform-origin: 0 50%;
+  -o-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transform: perspective(400em) rotateY(-45deg);
+  -moz-transform: perspective(400em) rotateY(-45deg);
+  -ms-transform: perspective(400em) rotateY(-45deg);
+  -o-transform: perspective(400em) rotateY(-45deg);
+  transform: perspective(400em) rotateY(-45deg);
+}
+
+.awemenu-animation .awemenu-flipyleft.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-slideleft > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: translate(-100%, 0);
+  -moz-transform: translate(-100%, 0);
+  -ms-transform: translate(-100%, 0);
+  -o-transform: translate(-100%, 0);
+  transform: translate(-100%, 0);
+  -webkit-transition-timing-function: cubic-bezier(0, 0.95, 0.42, 1.28);
+  -moz-transition-timing-function: cubic-bezier(0, 0.95, 0.42, 1.28);
+  transition-timing-function: cubic-bezier(0, 0.95, 0.42, 1.28);
+}
+
+.awemenu-animation .awemenu-slideleft.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-slideright > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: translate(100%, 0);
+  -moz-transform: translate(100%, 0);
+  -ms-transform: translate(100%, 0);
+  -o-transform: translate(100%, 0);
+  transform: translate(100%, 0);
+  -webkit-transition-timing-function: cubic-bezier(0, 0.95, 0.42, 1.28);
+  -moz-transition-timing-function: cubic-bezier(0, 0.95, 0.42, 1.28);
+  transition-timing-function: cubic-bezier(0, 0.95, 0.42, 1.28);
+}
+
+.awemenu-animation .awemenu-slideright.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-fadeskew > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: translate(-100px, 0) skewX(-10deg);
+  -moz-transform: translate(-100px, 0) skewX(-10deg);
+  -ms-transform: translate(-100px, 0) skewX(-10deg);
+  -o-transform: translate(-100px, 0) skewX(-10deg);
+  transform: translate(-100px, 0) skewX(-10deg);
+}
+
+.awemenu-animation .awemenu-fadeskew.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+.awemenu-animation .awemenu-scaleup > .awemenu-submenu {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: translate(0, 50px) scaleX(0.8);
+  -moz-transform: translate(0, 50px) scaleX(0.8);
+  -ms-transform: translate(0, 50px) scaleX(0.8);
+  -o-transform: translate(0, 50px) scaleX(0.8);
+  transform: translate(0, 50px) scaleX(0.8);
+}
+
+.awemenu-animation .awemenu-scaleup.awemenu-active > .awemenu-submenu {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}

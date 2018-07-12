@@ -1,0 +1,10 @@
+.awemenu-default.awemenu-left .awemenu > .awemenu-item > a, .awemenu-default.awemenu-right .awemenu > .awemenu-item > a {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 15px 20px;
+  line-height: 20px;
+}
+.awemenu-default.awemenu-right {
+  float: right;
+}

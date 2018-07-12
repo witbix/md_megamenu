@@ -1,0 +1,14 @@
+name: MD Megamenu
+description: Building megamenu for Drupal 8
+type: module
+package: MegaDrupal
+
+dependencies:
+  - awe_builder
+
+
+version: '8.x-1.4'
+core: 8.x
+project: 'md_megamenu'
+project status url: 'http://megadrupal.com/fserver'
+datestamp: 1514598842

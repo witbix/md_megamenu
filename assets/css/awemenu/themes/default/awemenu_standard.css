@@ -1,0 +1,86 @@
+.awemenu-default {
+  /* Mobile */
+}
+.awemenu-default.awemenu-nav, .awemenu-default.awemenu-mobile {
+  background-color: #03a9f4;
+}
+.awemenu-default .awemenu-bars {
+  color: #fff;
+  font-size: 16px;
+}
+.awemenu-default.awemenu-nav {
+  font-family: 'Open Sans', sans-serif;
+}
+.awemenu-default.awemenu-nav .awemenu-container {
+  max-width: 1200px;
+}
+.awemenu-default.awemenu-nav .awemenu-item > a {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+}
+.awemenu-default.awemenu-nav .awemenu-item:hover > a {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.awemenu-default.awemenu-nav .awemenu > .awemenu-item > a {
+  padding: 24px 15px;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+.awemenu-default.awemenu-nav .awemenu-submenu {
+  background-color: #fff;
+}
+.awemenu-default.awemenu-nav .awemenu-submenu .awemenu-item > a .awemenu-arrow {
+  margin-top: 6px;
+}
+.awemenu-default.awemenu-nav .awemenu-dropdown .awemenu-item > a {
+  color: #666;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+}
+.awemenu-default.awemenu-nav .awemenu-dropdown .awemenu-item:hover > a {
+  color: #03a9f4;
+}
+.awemenu-default.awemenu-mobile .awemenu-container {
+  padding: 0 20px;
+}
+.awemenu-default.awemenu-mobile .awemenu-logo {
+  padding: 10px 0;
+}
+.awemenu-default.awemenu-mobile .awemenu-bars {
+  line-height: 50px;
+}
+.awemenu-default.awemenu-mobile .awemenu {
+  background-color: #03a9f4;
+}
+.awemenu-default.awemenu-mobile .awemenu .awemenu-item > a {
+  line-height: 20px;
+  padding: 15px 20px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  text-transform: uppercase;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.awemenu-default.awemenu-mobile .awemenu .awemenu-item > a .awemenu-arrow {
+  line-height: 20px;
+}
+.awemenu-default.awemenu-mobile .awemenu .awemenu-item .awemenu-dropdown .awemenu-item {
+  padding-left: 40px;
+}
+.awemenu-default.awemenu-mobile .awemenu .awemenu-item .awemenu-dropdown .awemenu-item > a {
+  padding-left: 0;
+}
+.awemenu-default.awemenu-mobile .awemenu .awemenu-item .awemenu-dropdown .awemenu-item .awemenu-megamenu > .awemenu-item {
+  padding-left: 0;
+}
+.awemenu-default.awemenu-mobile .featured-business {
+  margin-top: 20px;
+}
+.awemenu-default.awemenu-mobile .featured-business li {
+  color: #000;
+}

@@ -1,0 +1,454 @@
+<?php
+
+/**
+ * @file
+ * Build Megamenu just Drag & Drop
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\Component\Serialization\Json;
+use Drupal\block\Entity\Block;
+use Drupal\md_megamenu\AweLib\AweLib;
+use Drupal\awe_builder\AweBuilder\AweBuilderRender;
+use Drupal\Core\Template\Attribute;
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ */
+function md_megamenu_form_menu_add_form_alter(&$form, &$form_state) {
+  if (\Drupal::currentUser()->hasPermission('admin megamenu')) {
+    $form['enable_megamenu'] = [
+      '#type' => 'checkbox',
+      '#title' => 'Enable Megamenu',
+      '#default_value' => false,
+      '#weight' => 0,
+    ];
+    $form['actions']['submit']['#submit'][] = 'md_megamenu_form_menu_add_form_submit';
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ */
+function md_megamenu_form_menu_edit_form_alter(&$form, &$form_state) {
+  $menu_machine = $form['id']['#default_value'];
+  if (\Drupal::currentUser()->hasPermission('admin megamenu')) {
+    $form['enable_megamenu_' . $menu_machine] = [
+      '#type' => 'checkbox',
+      '#title' => t('Enable Megamenu'),
+      '#default_value' => \Drupal::config('md_megamenu.settings')->get('enable_megamenu_' . $menu_machine),
+      '#weight' => 0,
+    ];    
+    $form['actions']['submit']['#submit'][] = 'md_megamenu_form_menu_edit_form_submit';
+  }
+  if (\Drupal::currentUser()->hasPermission('build megamenu') && \Drupal::config('md_megamenu.settings')->get('enable_megamenu_' . $menu_machine)) {
+    $form['font_'.$menu_machine] = [
+      '#title' => t('Google font'),
+      '#type' => 'textarea',
+      '#default_value' => \Drupal::config('md_megamenu.settings')->get('font_' . $menu_machine),
+      '#description' => "For example: http://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto",
+      '#resizable' => FALSE,
+      '#rows' => 2,
+      '#weight' => 0,
+    ];
+    
+    $form['use_logo_' . $menu_machine] = [
+      '#type' => 'checkbox',
+      '#title' => t('Use system logo'),
+      '#default_value' => \Drupal::config('md_megamenu.settings')->get('use_logo_' . $menu_machine),
+      '#weight' => 0,
+    ];
+    
+    $form['buildbtn'] = array(
+      '#markup' => '
+        <div class="ac_toolbar__group ac_enable-tooltip">
+            <a class="ac_toolbar__button awe-btn-build awe-btn-build-normal" href="'.Url::fromRoute('md_megamenu.build_menu', ['menu_name'=>md_arg(4)], ['absolute'=>true])->toString().'" data-tooltip="Edit megamenu">
+                <i class="acicon acicon-pen"></i>
+            </a>
+        </div>
+      ',
+      '#weight' => 1,
+    );
+
+  }
+  $form['#attached']['library'][] = 'md_megamenu/menu-admin';
+  $form['#attached']['library'][] = 'awe_builder/toolbar.fix';
+  return $form;
+}
+
+function md_megamenu_form_menu_add_form_submit($form, $form_state) {
+  $menu_machine = $form['id']['#value'];
+  $enable_val = $form_state->getValue('enable_megamenu');
+  \Drupal::configFactory()->getEditable('md_megamenu.settings')->set('enable_megamenu_' . $menu_machine, $enable_val)->save();   
+}
+
+function md_megamenu_form_menu_edit_form_submit($form, $form_state) {
+  if (\Drupal::currentUser()->hasPermission('admin megamenu')) {
+    $menu_machine = $form['id']['#value'];
+    $enable_val = $form_state->getValue('enable_megamenu_' . $menu_machine);
+    $font_val = $form_state->getValue('font_' . $menu_machine);
+    $use_logo = $form_state->getValue('use_logo_' . $menu_machine);
+    \Drupal::configFactory()->getEditable('md_megamenu.settings')
+        ->set('enable_megamenu_' . $menu_machine, $enable_val)
+        ->set('font_' . $menu_machine, $font_val)
+        ->set('use_logo_' . $menu_machine, $use_logo)
+        ->save();
+  }
+}
+
+function md_megamenu_form_alter(&$form, &$form_state, $form_id) {
+  //dsm($form_id);
+}
+
+function md_megamenu_preprocess_page(&$vars) {
+  
+}
+function md_megamenu_preprocess_html(&$vars) {
+  //ksm($vars);
+  $router = \Drupal::routeMatch()->getRouteName();
+  if($router == 'md_megamenu.content.iframe'){
+    $vars['attributes']['class'][] = 'awecontent-layout';
+  }
+}
+
+// hook_theme_suggestions_alter chay tat ca cac theme
+function md_megamenu_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
+}
+
+// hook_theme_suggestions_HOOK_alter chay 1 theme dc chon
+function md_megamenu_theme_suggestions_page_alter(array &$suggestions, array $variables, $hook) {
+  $router = \Drupal::routeMatch()->getRouteName();
+  if($router == 'md_megamenu.content.iframe'){
+    $suggestions[] = 'mdmenu_iframe';
+  }
+}
+
+function md_megamenu_theme_suggestions_block_alter(array &$suggestions, array $variables, $hook) {
+  $base_plugin_id = $variables['elements']['#base_plugin_id'];
+  $system_menu_block = $base_plugin_id == 'system_menu_block';
+  if($system_menu_block){
+    $id = $variables['elements']['#id'];
+    $block = Block::load($id);
+    $pluginId = $block->getPluginId();
+    $pluginId = explode(':', $pluginId);
+    $menu_machine_name = $pluginId[1];
+    $enable = \Drupal::config('md_megamenu.settings')->get('enable_megamenu_' . $menu_machine_name);
+    if($enable){
+      //$region = $block->get('region');
+      $suggestions[] = 'md_megamenu';
+    }
+  }
+}
+
+function md_megamenu_preprocess_md_megamenu(&$variables) {
+  $lib = new AweLib();
+  $elements = \Drupal::service('plugin.manager.awe_element')->getListElement();
+  $menuName = $variables['elements']['content']['#menu_name'];
+  $menuData = Json::decode(\Drupal::config('md_megamenu.settings')->get($menuName.'_settings'));
+  $_SESSION['menuboxSettings'] = $menuData;
+  $_SESSION['menuboxSettings']['settings'] = Json::decode($_SESSION['menuboxSettings']['settings']);
+  $menuData['content'] = $lib->getMenuItemsByMenuName($menuName);
+  $data = AweBuilderRender::processData($menuData, $elements);
+  //add contextual_links
+  $data[0]['#el_content']['#contextual_links'] = $variables['elements']['#contextual_links']; 
+  $data[0]['#el_content']['#contextual_links']['md_megamenu'] = array('route_parameters' => array('menu_name'=>$menuName));
+  $data[0]['#menuName'] = $menuName;
+  
+  $variables['content'] = $data; //\Drupal::service('renderer')->render($data);
+  $variables['menuName'] = $menuName;
+  $variables['configuration'] = $variables['elements']['#configuration'];
+  $variables['derivative_plugin_id'] = $variables['elements']['#derivative_plugin_id'];
+  
+  $variables['#attached']['library'][] = 'awe_builder/awe_builder.frontend';
+  $variables['#attached']['library'][] = 'md_megamenu/megamenu.front';
+  $variables['#attached']['library'][] = "md_megamenu/md_menu_{$menuName}";
+  if (\Drupal::hasService('md_fontello')) {
+    $fontello = \Drupal::service('md_fontello');
+    $libraries = $fontello->getListLibraries();
+    foreach ($libraries as $library) {
+      $variables['#attached']['library'][] = $library;
+    }
+  }  
+}
+
+/**
+ * Implement hook_preprocess_md_menubox().
+ */
+function md_megamenu_preprocess_md_menubox(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  // fix attributes class not exist when user not login
+  if(!isset($vars['attributes']['class']))
+    $vars['attributes']['class'] = [];
+  $vars['tag'] = 'nav';
+  $vars['content_attributes'] = new Attribute();
+  $vars['content_attributes']->addClass('ac_container');
+  $vars['attributes']['id'][] = $vars['custom_id'] ? $vars['custom_id'] : $vars['el_wrap_class'];
+  $settings = $vars['el_settings'];
+  $menuType = $vars['main']['type'] ? $vars['main']['type'] : 'standard';
+  $skin = $vars['main']['skin'];
+  $skinColor = $vars['main']['skin_color'];   
+  $vars['attributes']['class'] = array_merge($vars['attributes']['class'], array(
+    'awemenu-nav', 'js-awemenu-nav-front', 'awemenu-'.$skin, 'awemenu-'.$skin.'-color-'.$skinColor,
+    'awemenu-'.$menuType, $vars['el_wrap_class'], $vars['custom_classes'], 'awemenu-fix-mobile'
+  ));
+  
+  // check logo
+  $use_logo = \Drupal::config('md_megamenu.settings')->get('use_logo_' . $vars['menuName']);
+  if($use_logo){
+    $vars['logo'] = theme_get_setting('logo.url');
+    $vars['homeUrl'] = Url::fromRoute('<front>')->toString();
+    $vars['attributes']['class'][] = 'awemenu-has-logo';
+  } 
+  
+  if(isset($vars['menu_bar'])){
+    $vars['tag'] = isset($vars['menu_bar']['container']) ? $vars['menu_bar']['container'] : 'nav';
+  }
+ 
+  if(!in_array($vars['main']['type'], array('left', 'right'))){
+    $containerWidth = '1170px';
+    if (isset($vars['menu_bar'])) {      
+      if(isset($vars['menu_bar']['fullwidth']) && $vars['menu_bar']['fullwidth'])
+        $containerWidth = '100%';
+      else if(isset($vars['menu_bar']['menubar_width'])){
+        $containerWidth = intval($vars['menu_bar']['menubar_width']).'px';      
+      }
+    }
+  }else {
+    $containerWidth = '';
+  }
+  
+  $vars['containerWidth'] = $containerWidth;
+  
+  if (isset($settings['main']['settings'])) {
+    $main_settings = $settings['main']['settings'];
+    if (isset($main_settings['classes']) && $main_settings['classes']) {
+      $vars['attributes']['class'][] = $main_settings['classes'];
+    }
+    if($main_settings['skin'] && $main_settings['skin_color'])
+      $vars['attributes']['class'][] = 'awemenu-' . $main_settings['skin'] . '-' . $main_settings['skin_color'];
+
+    if (isset($main_settings['attributes']) && $main_settings['attributes']) {
+      AweBuilderRender::getAttributes($vars['attributes'], $main_settings['attributes']);
+    }
+  }
+  // fix mobile 
+  $responsive_width = $vars['main']['responsive_width'] ? intval($vars['main']['responsive_width']) : 768;
+  $css = "@media(max-width: {$responsive_width}px){.awemenu-fix-mobile ul.awemenu{visibility:hidden;}}";
+  $vars['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'style',
+      '#value'=> $css
+    ],
+    'fix-menu-mobile'
+  ];
+}
+
+/**
+ * Implement hook_preprocess_md_menu_item().
+ */
+function md_megamenu_preprocess_md_menu_item(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $vars['content_attributes'] = new Attribute();
+  $vars['content_attributes']->addClass('ac_container');
+  $vars['attributes']['id'][] = $vars['custom_id'] ? $vars['custom_id'] : $vars['el_wrap_class'];
+  $vars['attributes']['class'][] = 'awemenu-item';
+  $vars['attributes']['class'][] = $vars['el_wrap_class'];
+  
+  if($vars['custom_classes'])
+    $vars['attributes']['class'][] = $vars['custom_classes'];
+  if(isset($vars['in_active_trail']) && $vars['in_active_trail'])
+    $vars['attributes']['class'][] = 'set-active';
+    
+  if($vars['url'] === '<front>'){
+    $vars['link_system_path'] = $vars['url'];
+    $vars['url'] = Url::fromRoute($vars['url'])->toString();
+  }
+  else if($vars['url'] != '#' && strtolower(substr($vars['url'], 0,4)) != 'http'){
+    $vars['link_system_path'] = substr($vars['url'], 1);
+  }
+  
+  if (isset($vars['main'])){
+    $main_settings = $vars['main'];
+    if (isset($main_settings['classes']) && $main_settings['classes']) {
+      $vars['attributes']['class'][] = $main_settings['classes'];
+    }
+
+    if (isset($main_settings['attributes']) && $main_settings['attributes']) {
+      AweBuilderRender::getAttributes($vars['attributes'], $main_settings['attributes']);
+    }
+    $attributesUl = array();
+    $menuboxSettings = $_SESSION['menuboxSettings']['settings'];
+    $defaultTopItem = $menuboxSettings['top_items']['settings'];
+    $defaultMegaSubmenu = $menuboxSettings['mega_submenu']['settings'];
+    $defaultFlyoutSubmenu = $menuboxSettings['flyout_submenu']['settings'];
+    $menuType = isset($main_settings['type']) ? $main_settings['type'] : 'normal';
+    $submenuSettings = isset($main_settings['submenu']) ? $main_settings['submenu'] : array();
+    $disableWidth = isset($submenuSettings['disable_width']) ? $submenuSettings['disable_width'] : false;
+    switch($menuType){
+      case 'normal':
+
+        break;
+      case 'mega':
+        if($disableWidth){
+          if(isset($submenuSettings['submenu_fullwidth']) && $submenuSettings['submenu_fullwidth'])
+            $width = '100%';
+          else {
+            $width = isset($submenuSettings['mega_width']) ? $submenuSettings['mega_width'] : $defaultMegaSubmenu['mega_width']; 
+          }
+        } else {
+          $width = $defaultMegaSubmenu['fullwidth'] ? '100%' : $defaultMegaSubmenu['mega_width'];
+        }
+        break;      
+      case 'list':
+        if($disableWidth){
+          $width = isset($submenuSettings['dropdown_width']) ? $submenuSettings['dropdown_width'] : $defaultFlyoutSubmenu['dropdown_width'];
+        } else {
+          $width = $defaultFlyoutSubmenu['dropdown_width'];
+        }
+    }
+    if(isset($width)){
+      if($width !== '100%')
+        $width = intval($width);
+      $attributesUl[] = "data-width = {$width}";
+    }
+    
+    // render attribute show submenu
+    if(isset($main_settings['show_submenu_default']) && $main_settings['show_submenu_default'])
+      $vars['attributes']['class'][] = 'show-submenu-default';
+    if(isset($main_settings['show_submenu_current']) && $main_settings['show_submenu_current'])
+      $vars['attributes']['class'][] = 'show-submenu-current';
+    
+    //render item right
+    if(isset($main_settings['item_position']) && $main_settings['item_position'] == 'float-right')
+      $vars['attributes']['class'][] = 'awemenu-item-right';
+    // custom animation
+    if($menuboxSettings['main']['settings']['animation_type'] != 'none'){
+      if(isset($main_settings['submenu']['animation_type'])){
+        $vars['attributes']['class'][] = 'awemenu-'.$main_settings['submenu']['animation_type'];
+        $vars['attributes']['class'][] = 'has-custom-animation';
+      }
+      if(isset($main_settings['submenu']['animation_duration'])){
+        $vars['attributes']['data-duration'] = $main_settings['submenu']['animation_duration'];
+        $vars['attributes']['class'][] = 'has-custom-duration';
+      }
+    }
+    
+    // render menu title & icon
+    $itemType = isset($main_settings['item_type']) ? $main_settings['item_type'] : 'default';
+    if($itemType == 'default'){
+      $itemType = ($vars['level'] == 1) ? $defaultTopItem['item_type'] : $defaultFlyoutSubmenu['item_type'];
+    }
+    $el_title = $vars['el_title'];
+    if($itemType != 'text-only'){
+      $iconClass = isset($main_settings['icon']) ? $main_settings['icon'] : '';
+      if($iconClass)
+        $vars['el_title'] = "<i class = '{$iconClass}'></i>";
+      else $vars['el_title'] = '';
+      if($itemType == 'icon-text')
+        $vars['el_title'] .= $el_title;
+    } else 
+      $vars['el_title'] = $el_title;
+    
+    //render align submenu
+    $horizontal_align = isset($main_settings['submenu']['horizontal_align']) ? $main_settings['submenu']['horizontal_align'] : '';
+    $vertical_align = isset($main_settings['submenu']['vertical_align']) ? $main_settings['submenu']['vertical_align'] : '';
+    if(in_array($menuboxSettings['main']['settings']['type'], ['standard', 'top', 'bottom']) && $vars['level'] == 1){
+      if($horizontal_align){
+        $horizontal_align = substr($horizontal_align, 6);
+        $attributesUl[] = "data-align = {$horizontal_align}";
+      }
+    }else{
+      if($vertical_align){
+        $vertical_align = substr($vertical_align, 6);
+        $attributesUl[] = "data-align = {$vertical_align}";
+      }
+      if($vars['level'] > 1){
+        $orientation = isset($main_settings['submenu']['submenu_position']) ? $main_settings['submenu']['submenu_position'] : '';
+        if($orientation && $orientation !== 'auto')
+          $attributesUl[] = "data-orientation = {$orientation}";
+      }
+    }
+  
+    $vars['attributesUl'] = $attributesUl;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ * @return array
+ */
+function md_megamenu_theme($existing, $type, $theme, $path) {
+  $theme = [];
+  $theme['mdmenu_iframe'] = [
+    'path' => $path . '/templates/backend',
+    'variables' => [
+      'data' => [],
+    ]
+  ];
+  
+  $theme['md_megamenu'] = [
+    'path' => $path . '/templates/frontend',
+    'variables' => []
+  ];
+  
+  $theme['md_menubox'] = [
+    'path' => $path . '/templates/frontend',
+    'variables' => [
+      'el_content' => '',
+      'el_settings' => [],      
+      'el_wrap_class' => '',
+      'custom_id' => '',
+      'custom_classes' => '',
+      'menuName'=>''
+    ]
+  ];
+
+  $theme['md_menu_item'] = [
+    'path' => $path . '/templates/frontend',
+    'variables' => [
+      'el_settings' => [],
+      'el_content' => '',
+      'el_title'=>'',
+      'level'=>'',
+      'url'=>'',
+      'in_active_trail'=>FALSE,
+      'el_wrap_class' => '',
+      'custom_id' => '',
+      'custom_classes' => ''
+    ]
+  ];
+  return $theme;
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function md_megamenu_library_info_build() {
+  $libraries = [];
+  $library = \Drupal::config("md_megamenu.settings")->get("libraries");
+  if($library){
+    $library = json_decode ($library, true);
+    foreach ($library as $menu_name => $data) {
+      $libraries["md_menu_{$menu_name}"] = [
+        'dependencies' => [
+          'awe_builder/awe_builder.frontend'
+        ]
+      ];
+      if (isset($data['js'])) {
+        $libraries["md_menu_{$menu_name}"]['js'] = $data['js'];
+      }
+      if (isset($data['css'])) {
+        $libraries["md_menu_{$menu_name}"]['css'] = $data['css'];
+      }
+    }
+  }
+  return $libraries;
+}

@@ -1,0 +1,40 @@
+menu-admin:
+  css:
+    component:
+      assets/css/md_megamenu_admin.css: {}
+      
+  dependencies:
+    - awe_builder/awe_builder.admin
+megamenu.admin:
+  # Add css file
+  css:
+    component:
+      assets/css/megamenu_admin.css: {}
+  # Add js files
+  header: true
+  js:
+    assets/js/iframe-build-lib.js: {}
+    assets/js/megamenu_admin.js: {}
+  dependencies:
+    - awe_builder/awe_builder.admin
+megamenu.iframe:
+  # Add css file
+  css:
+    component:
+      assets/css/megamenu_build_fix.css: {}
+      assets/css/awemenu/awemenu-iframe-build.css: {}
+  # Add js files
+  header: true
+  js:
+    assets/js/iframe-build-lib.js: {}
+megamenu.front:
+  # Add css file
+  css:
+    component:
+      assets/css/awemenu/awemenu.css: {}
+      assets/css/awemenu/awemenu-animation.css: {}
+  # Add js files
+  header: true
+  js:
+    assets/js/awemenu.js: {}
+    assets/js/megamenu_front.js: {}

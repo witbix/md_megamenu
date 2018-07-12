@@ -1,0 +1,19 @@
+{{ title_suffix }}
+<{{ tag }} {{ attributes }} {% if el_animation %}data-animation='{{ el_animation }}'{% endif %} {% if overlay %}data-overlay='{{ overlay }}'{% endif %} data-settings = "{{ main|json_encode() }}">    
+    <div class="awemenu-container" style="{% if containerWidth %}width:{{containerWidth }}; max-width:100%;{% endif %}">
+        {% if logo %}
+            <div class="awemenu-logo">
+                <a href="{{homeUrl}}" title="{{'Home'|trans}}" rel="home">
+                    <img src="{{ logo }}" alt="{{'Home'|trans}}">
+                </a>
+            </div>
+        {% endif %}
+        <ul class="awemenu">
+            {{ el_content }}
+        </ul>
+    </div>
+</{{ tag }}>
+<script>    
+    // fix for mobile, script run before page loaded completely
+    fix_megamenu_flashing_on_mobile(); // run here better than at header/ footer
+</script>
