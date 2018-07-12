@@ -1,5 +1,5 @@
 {
-    "name": "blogenic/mega-menu",
+    "name": "blogenic/md_megamenu",
     "description": "Megamenu builder for Drupal 8",
     "type": "drupal-module",
     "minimum-stability": "dev",
