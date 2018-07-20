@@ -10,6 +10,6 @@
         }
     ],
     "require": {
-        "blogenic/awe_builder": "8.x-1.x-dev"
+        "blogenic/awe_builder": "dev-bnc-theme"
     }
 }
