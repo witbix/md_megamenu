@@ -61,6 +61,18 @@ function md_megamenu_form_menu_edit_form_alter(&$form, &$form_state) {
       '#default_value' => \Drupal::config('md_megamenu.settings')->get('use_logo_' . $menu_machine),
       '#weight' => 0,
     ];
+      $form['use_site_name_' . $menu_machine] = [
+          '#type' => 'checkbox',
+          '#title' => t('Use site name'),
+          '#default_value' => \Drupal::config('md_megamenu.settings')->get('use_site_name_' . $menu_machine),
+          '#weight' => 0,
+      ];
+      $form['use_slogan_' . $menu_machine] = [
+          '#type' => 'checkbox',
+          '#title' => t('Use site slogan'),
+          '#default_value' => \Drupal::config('md_megamenu.settings')->get('use_slogan_' . $menu_machine),
+          '#weight' => 0,
+      ];
     
     $form['buildbtn'] = array(
       '#markup' => '
@@ -91,10 +103,14 @@ function md_megamenu_form_menu_edit_form_submit($form, $form_state) {
     $enable_val = $form_state->getValue('enable_megamenu_' . $menu_machine);
     $font_val = $form_state->getValue('font_' . $menu_machine);
     $use_logo = $form_state->getValue('use_logo_' . $menu_machine);
+      $use_site_name = $form_state->getValue('use_site_name_' . $menu_machine);
+      $use_slogan = $form_state->getValue('use_slogan_' . $menu_machine);
     \Drupal::configFactory()->getEditable('md_megamenu.settings')
         ->set('enable_megamenu_' . $menu_machine, $enable_val)
         ->set('font_' . $menu_machine, $font_val)
         ->set('use_logo_' . $menu_machine, $use_logo)
+        ->set('use_site_name_' . $menu_machine, $use_site_name)
+        ->set('use_slogan_' . $menu_machine, $use_slogan)
         ->save();
   }
 }
@@ -201,9 +217,20 @@ function md_megamenu_preprocess_md_menubox(&$vars) {
     $vars['logo'] = theme_get_setting('logo.url');
     $vars['homeUrl'] = Url::fromRoute('<front>')->toString();
     $vars['attributes']['class'][] = 'awemenu-has-logo';
-  } 
-  
-  if(isset($vars['menu_bar'])){
+  }
+    // check site name
+    $use_site_name = \Drupal::config('md_megamenu.settings')->get('use_site_name_' . $vars['menuName']);
+    if($use_site_name){
+        $vars['site_name'] = \Drupal::config('system.site')->get('name');
+        $vars['attributes']['class'][] = 'awemenu-has-site_name';
+    }
+    // check site slogan
+    $use_slogan = \Drupal::config('md_megamenu.settings')->get('use_slogan_' . $vars['menuName']);
+    if($use_slogan){
+        $vars['slogan'] = \Drupal::config('system.site')->get('slogan');
+        $vars['attributes']['class'][] = 'awemenu-has-slogan';
+    }
+    if(isset($vars['menu_bar'])){
     $vars['tag'] = isset($vars['menu_bar']['container']) ? $vars['menu_bar']['container'] : 'nav';
   }
  

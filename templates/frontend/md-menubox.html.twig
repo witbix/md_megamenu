@@ -1,13 +1,33 @@
 {{ title_suffix }}
 <{{ tag }} {{ attributes }} {% if el_animation %}data-animation='{{ el_animation }}'{% endif %} {% if overlay %}data-overlay='{{ overlay }}'{% endif %} data-settings = "{{ main|json_encode() }}">    
     <div class="awemenu-container" style="{% if containerWidth %}width:{{containerWidth }}; max-width:100%;{% endif %}">
-        {% if logo %}
-            <div class="awemenu-logo">
-                <a href="{{homeUrl}}" title="{{'Home'|trans}}" rel="home">
-                    <img src="{{ logo }}" alt="{{'Home'|trans}}">
-                </a>
+
+        {% if logo or site_name or slogan %}
+            <div class="system-branding">
+                {% if logo %}
+                    <div class="awemenu-logo">
+                        <a href="{{homeUrl}}" title="{{'Home'|trans}}" rel="home">
+                            <img src="{{ logo }}" alt="{{'Home'|trans}}">
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if site_name %}
+                    <div class="awemenu-site-name">
+                        <a href="{{homeUrl}}" title="{{'Home'|trans}}" rel="home">
+                            {{ site_name }}
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if slogan %}
+                    <div class="awemenu-slogan">
+                        <p>{{ slogan }}</p>
+                    </div>
+                {% endif %}
             </div>
         {% endif %}
+
         <ul class="awemenu">
             {{ el_content }}
         </ul>
