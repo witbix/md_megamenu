@@ -747,3 +747,8 @@
 .amm-up:before {
   content: "\e904";
 }
+
+.system-branding{
+  float: left;
+  clear: both;
+}
