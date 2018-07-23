@@ -41,12 +41,12 @@
 .awemenu-default.awemenu-nav .awemenu-dropdown .awemenu-item:hover > a {
   color: #03a9f4;
 }
-.awemenu-default.awemenu-mobile .awemenu-container {
-  padding: 0 20px;
-}
-.awemenu-default.awemenu-mobile .awemenu-logo {
-  padding: 10px 0;
-}
+/*.awemenu-default.awemenu-mobile .awemenu-container {*/
+  /*padding: 0 20px;*/
+/*}*/
+/*.awemenu-default.awemenu-mobile .awemenu-logo {*/
+  /*padding: 10px 0;*/
+/*}*/
 .awemenu-default.awemenu-mobile .awemenu-bars {
   line-height: 50px;
 }

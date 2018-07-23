@@ -47,6 +47,8 @@
   margin-left: auto;
   margin-right: auto;
   position: relative;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .awemenu-container:after, .awemenu-container:before {
   content: '';
@@ -750,5 +752,38 @@
 
 .system-branding{
   float: left;
-  clear: both;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.awemenu-logo{
+  float: left;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  margin-right: 0.2em;
+}
+
+.awemenu-site-name{
+  float: left;
+  font-size: 17px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+
+.awemenu-slogan{
+  font-size: 7px;
+  position: absolute;
+  top: 77%;
+  transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  width: 200px;
+  left: 36px;
 }
