@@ -25,7 +25,7 @@
             mobileTrigger: 'click', // event type to show menu on mobile. Values is one of ['click', 'toggle']. Default is 'click'
             mobileType: 'standard', // type of menu on mobile screen. Value is one of ['standard', 'top', 'bottom', 'outleft', 'outright']. Default is 'standard'.
             mobileAnimationDuration: 500, // duration (ms) to play animation open or close menu. Default value is 500.
-            customMenuBar: '<span class="amm-bar"></span>', // html of menu bar
+            customMenuBar: '<span></span><span></span><span></span><span></span>', // html of menu bar
             customCloseButton: false, // html string for close button when menu position is outleft, outright. Default: false
             dropdownDecor: false, // string html for submenu decor. Default is false.
             showArrow: true, // enable arrow to define item has submenu on desktop mode. If this value is false, all arrow is removed. Default value is true.
@@ -368,6 +368,10 @@
                         _self.$el.removeClass('awemenu-active');
                     }).css('z-index', '');
                 }
+
+                // Animate Burger menu
+                $('.awemenu-bars').toggleClass('open');
+
             } else {
                 _self.$el.toggleClass('awemenu-active');
             }
@@ -670,6 +674,7 @@
                                 // only process click when menus is ready
                                 if (_self.isReady)
                                     _self.onMenuBarClick();
+                                // $(this).toggleClass('open');
                             });
 
                             // init for one page mode

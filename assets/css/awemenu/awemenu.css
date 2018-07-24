@@ -49,6 +49,7 @@
   position: relative;
   padding-left: 15px;
   padding-right: 15px;
+  height: 60px;
 }
 .awemenu-container:after, .awemenu-container:before {
   content: '';
@@ -96,14 +97,6 @@
 .awemenu-has-logo .awemenu {
   float: right;
   position: static;
-}
-
-.awemenu-bars {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  cursor: pointer;
-  display: none;
 }
 
 .awemenu-standard .awemenu-arrow, .awemenu-top .awemenu-arrow {
@@ -730,10 +723,6 @@
   content: "\e070";
 }
 
-.amm-bar:before {
-  content: "\e20e";
-}
-
 .amm-down:before {
   content: "\e901";
 }
@@ -787,3 +776,86 @@
   width: 200px;
   left: 36px;
 }
+
+
+/*Burger menu animation https://codepen.io/designcouch/pen/Atyop */
+.awemenu-bars {
+  display: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+  min-width: 40px;
+  min-height: 40px;
+  position: relative;
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  top: 50%;
+  transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+
+.awemenu-bars span {
+  margin-top: 4px;
+  display: block;
+  position: absolute;
+  height: 5px;
+  width: 100%;
+  background: black;
+  border-radius: 2px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+}
+
+.awemenu-bars span:nth-child(1) {
+  top: 0;
+}
+
+.awemenu-bars span:nth-child(2),.awemenu-bars span:nth-child(3) {
+  top: 13px;
+}
+
+.awemenu-bars span:nth-child(4) {
+  top: 26px;
+}
+
+.awemenu-bars.open span {
+  background: #2396f3;
+}
+.awemenu-bars.open span:nth-child(1) {
+  top: 13px;
+  width: 0;
+  left: 50%;
+}
+
+.awemenu-bars.open span:nth-child(2) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.awemenu-bars.open span:nth-child(3) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.awemenu-bars.open span:nth-child(4) {
+  top: 13px;
+  width: 0;
+  left: 50%;
+}
+

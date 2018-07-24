@@ -10,7 +10,7 @@ function fix_megamenu_flashing_on_mobile(){
         if(window_width <= responsiveWidth){
             var type = settings.type || 'standard',
                 mobileType = settings.m_type || 'standard';
-            $navigation.addClass('awemenu-mobile awemenu-mobile-' + mobileType).removeClass('awemenu-' + type).find('> .awemenu-container').prepend('<div class="awemenu-bars"><span class="amm-bar"></span></div>');
+            $navigation.addClass('awemenu-mobile awemenu-mobile-' + mobileType).removeClass('awemenu-' + type).find('> .awemenu-container').prepend('<div class="awemenu-bars"><span></span><span></span><span></span><span></span></div>');
         }
         // remvoe class awemenu-fix-mobile with all screen mode
         $navigation.removeClass('awemenu-fix-mobile');
@@ -46,7 +46,7 @@ function fix_megamenu_flashing_on_mobile(){
                 mobileTrigger: settings.mobile_trigger || 'click',
                 mobileType: settings.m_type || 'standard',
                 mobileAnimationDuration: settings.mobile_animation_duration ? parseInt(settings.mobile_animation_duration) : 500,
-                customMenuBar:'<span class="amm-bar"></span>',
+                customMenuBar:'<span></span><span></span><span></span><span></span>',
                 customCloseButton:'',
                 dropdownDecor:'',                    
                 showArrow:settings.enable_arrow_desktop ? true : false,
