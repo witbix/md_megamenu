@@ -363,14 +363,29 @@
                     $mainMenu.slideDown(opts.mobileAnimationDuration, function () {
                         _self.$el.addClass('awemenu-active');
                     }).css('z-index', 999999);
+
+                    //Cover the viewport
+                    $(".awemenu").css("min-height", "100vh");
+
+                    // Disable body scroll while mobile menu list is opened
+                    document.body.style.overflow = 'hidden';
                 } else {
                     $mainMenu.slideUp(opts.mobileAnimationDuration, function () {
                         _self.$el.removeClass('awemenu-active');
                     }).css('z-index', '');
+
+                    //Reset awemenu height
+                    $(".awemenu").css("min-height", '');
+
+                    // Enable body scroll while mobile menu list is closed
+                    document.body.style.overflow = 'auto';
                 }
 
                 // Animate Burger menu
                 $('.awemenu-bars').toggleClass('open');
+
+
+
 
             } else {
                 _self.$el.toggleClass('awemenu-active');
@@ -674,7 +689,6 @@
                                 // only process click when menus is ready
                                 if (_self.isReady)
                                     _self.onMenuBarClick();
-                                // $(this).toggleClass('open');
                             });
 
                             // init for one page mode
