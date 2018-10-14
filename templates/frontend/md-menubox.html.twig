@@ -35,5 +35,6 @@
 </{{ tag }}>
 <script>    
     // fix for mobile, script run before page loaded completely
-    fix_megamenu_flashing_on_mobile(); // run here better than at header/ footer
+    if(window.fix_megamenu_flashing_on_mobile)
+        fix_megamenu_flashing_on_mobile(); // run here better than at header/ footer
 </script>

@@ -21,6 +21,7 @@
             },
             changeWindowURL: false,
             defaultDesktopAnimationDuration: 300, // default duration time by millisecond(ms) for all animation open submenu on desktop mode. If submenu has attribute data-duration, this value is overrided. Default value is 300
+            enableMobile:true,
             responsiveWidth: 780, // minimum width of browser to change from desktop mode to mobile mode. Default is 780px.
             mobileTrigger: 'click', // event type to show menu on mobile. Values is one of ['click', 'toggle']. Default is 'click'
             mobileType: 'standard', // type of menu on mobile screen. Value is one of ['standard', 'top', 'bottom', 'outleft', 'outright']. Default is 'standard'.
@@ -106,7 +107,12 @@
             this.calculateStickyOffset();
 
             // remove all item arrow if exist
-            $('i.awemenu-arrow', this.$el).remove();
+            if(this.$el.hasClass('not-remove-arrow') && !this.$el.hasClass('awemenu-mobile')){
+                //reove arrow from menu level 2
+                $('.awemenu-item .awemenu-item i.awemenu-arrow', this.$el).remove();
+            } else {
+                $('i.awemenu-arrow', this.$el).remove();
+            }
 
             // Hanlder window resize event
             $(window).bind('resize', $.proxy(_self.windowResizeHandler, _self)).trigger('resize');
@@ -164,7 +170,7 @@
                 else {
                     switch (opt) {
                         case 'trigger':
-                            if ($.inArray(value, ['click', 'hover', 'toggle']) === -1)
+                            if ($.inArray(value, ['click', 'hover', 'hover_intent', 'toggle']) === -1)
                                 options[opt] = 'hover';
                             break;
 
@@ -242,7 +248,7 @@
             this.classes = [];
 
             // unbind click to menu item
-            $('.awemenu-item', this.$el).unbind('mouseenter').unbind('mouseleave');
+            $('.awemenu-item', this.$el).unbind('mouseenter').unbind('mouseleave').unbind('hoverIntent');
             $('.awemenu-item > a', this.$el).unbind('click');
             $('.awemenu-item > a > .awemenu-arrow', this.$el).unbind('click');
 
@@ -286,14 +292,18 @@
             // check responsive width
             if (ww < opts.responsiveWidth && this.options.type !== 'fullscreen') {
                 if (!this.isMobile || this.isMobile === -1) {
-                    changed = true;
-                    this.isMobile = true;
+                    if(opts.enableMobile){
+                        changed = true;
+                        this.isMobile = true;
+                        // add mobile classes
+                        this.addMenuClasses(['awemenu-mobile', 'awemenu-mobile-' + opts.mobileType]);
 
-                    // add mobile classes
-                    this.addMenuClasses(['awemenu-mobile', 'awemenu-mobile-' + opts.mobileType]);
-
-                    // remove desktop mode classes
-                    this.removeMenuClasses(['awemenu-' + opts.type]);
+                        // remove desktop mode classes
+                        this.removeMenuClasses(['awemenu-' + opts.type]);
+                    }else{
+                        // add desktop mode classes
+                        this.addMenuClasses(['awemenu-' + opts.type]);
+                    }
                 }
             } else {
                 if (this.isMobile || this.isMobile === -1) {
@@ -381,6 +391,8 @@
                     // init trigger for menu items
                     if (_self.options.trigger === 'hover') {
                         _self.initTriggerHover($(this));
+                    } else if(_self.options.trigger === 'hover_intent'){
+                        _self.initTriggerHoverIntent($(this));
                     }
                     _self.initTriggerClick($(this));
 
@@ -430,6 +442,44 @@
                 }
             });
         },
+        initTriggerHoverIntent: function () {
+            var _self = this;
+
+            // init hover on menu item
+            $('li.awemenu-item', this.$el).hoverIntent(function(){
+                var $item = $(this),
+                        hideTimeout = $item.data('hide-submenu');
+
+                if (!_self.isMobile && _self.isReady) {
+                    // reset flag hover out
+                    $item.data('hover-out', false);
+
+                    // clear timeout hide submenu
+                    if (hideTimeout) {
+                        clearTimeout(hideTimeout);
+                        $item.data('hide-submenu', false)
+                    }
+
+                    if ($('> a', $item).length) {
+                        if (_self.options.hoverDelay > 0) {
+                            setTimeout(function () {
+                                if (!$item.data('hover-out'))
+                                    _self.activateSubMenu($item);
+                            }, _self.options.hoverDelay);
+                        } else {
+                            _self.activateSubMenu($item);
+                        }
+                    }
+                }
+            }, function(){
+                var $item = $(this);
+
+                if (!_self.isMobile) {
+                    $item.data('hover-out', true);
+                    _self.deactivateSubMenu($item);
+                }
+            });
+        },
         initTriggerClick: function () {
             var _self = this,
                     opts = this.options;
@@ -446,7 +496,7 @@
                 }
 
                 // process click by status of menu link
-                if ((!_self.isMobile && opts.trigger !== 'hover') || _self.isMobile) {
+                if ((!_self.isMobile && $.inArray(opts.trigger, ['hover', 'hover_intent']) === -1) || _self.isMobile) {
                     if ($item.hasClass('awemenu-active')) {
                         // deactivate submenu of item
                         _self.deactivateSubMenu($item);
@@ -1140,7 +1190,7 @@
                     this.stickyReplacer = null;
 
                     // remove width in containter
-                    $('.awemenu-container', _self.$el).width('');
+                    //$('.awemenu-container', _self.$el).width('');
 
                     // remove sticky class
                     this.removeMenuClasses(stickyClass);

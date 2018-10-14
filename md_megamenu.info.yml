@@ -7,7 +7,7 @@ dependencies:
   - awe_builder
 
 
-version: '8.x-1.4'
+version: '8.x-1.5'
 core: 8.x
 project: 'md_megamenu'
 project status url: 'http://megadrupal.com/fserver'

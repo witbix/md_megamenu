@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
     jQuery.extend(AweBuilderSettings.URLs, pathConfigurations);
     // set skin url
     if(drupalSettings.path.baseUrl)
-        AweBuilderSettings.skinURL = drupalSettings.path.baseUrl + 'modules/contrib/md_megamenu/assets/css/awemenu/themes';
+        AweBuilderSettings.skinURL = drupalSettings.path.baseUrl  + drupalSettings.md_megamenu_folder_url+ '/assets/css/awemenu/themes';
 
     // Move all body children in to wrapper
     jQuery('body').append('<div class="awecontent-body-wrapper"></div>');
@@ -34,7 +34,7 @@ jQuery(document).ready(function ($) {
         event.preventDefault();
         //fix drupalSettings path load after builder
         if(!AweBuilderSettings.skinURL)
-            AweBuilderSettings.skinURL = drupalSettings.path.baseUrl + 'modules/contrib/md_megamenu/assets/css/awemenu/themes';
+            AweBuilderSettings.skinURL = drupalSettings.path.baseUrl + drupalSettings.md_megamenu_folder_url+ '/assets/css/awemenu/themes';
         if(drupalSettings.megamenuSkin)
             AweBuilderSettings.megamenuSkin = drupalSettings.megamenuSkin;
         // update private font

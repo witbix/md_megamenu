@@ -6,14 +6,18 @@ function fix_megamenu_flashing_on_mobile(){
         var $navigation= $(item),
             settings = $navigation.attr('data-settings');
         settings = $.parseJSON(settings);
-        var responsiveWidth = settings.responsive_width ? parseInt(settings.responsive_width) : 768;
-        if(window_width <= responsiveWidth){
-            var type = settings.type || 'standard',
-                mobileType = settings.m_type || 'standard';
-            $navigation.addClass('awemenu-mobile awemenu-mobile-' + mobileType).removeClass('awemenu-' + type).find('> .awemenu-container').prepend('<div class="awemenu-bars"><span class="amm-bar"></span></div>');
+        if(settings.enable_mobile){
+            var responsiveWidth = settings.responsive_width ? parseInt(settings.responsive_width) : 768;
+            if(window_width <= responsiveWidth){
+                var type = settings.type || 'standard',
+                    mobileType = settings.m_type || 'standard';
+                $navigation.addClass('awemenu-mobile awemenu-mobile-' + mobileType).removeClass('awemenu-' + type);
+                if(!$('.awemenu-bars', $navigation).length)
+                    $navigation.find('> .awemenu-container').prepend('<div class="awemenu-bars"><span class="amm-bar"></span></div>');
+            }
+            // remvoe class awemenu-fix-mobile with all screen mode
+            $navigation.removeClass('awemenu-fix-mobile');
         }
-        // remvoe class awemenu-fix-mobile with all screen mode
-        $navigation.removeClass('awemenu-fix-mobile');
     });
 }
 //end fix mobile
@@ -44,6 +48,7 @@ function fix_megamenu_flashing_on_mobile(){
                 defaultDesktopAnimationDuration: settings.animation_duration ? parseInt(settings.animation_duration) : 300,
                 responsiveWidth:settings.responsive_width ? parseInt(settings.responsive_width) : 768,
                 mobileTrigger: settings.mobile_trigger || 'click',
+                enableMobile :settings.enable_mobile ? true : false,
                 mobileType: settings.m_type || 'standard',
                 mobileAnimationDuration: settings.mobile_animation_duration ? parseInt(settings.mobile_animation_duration) : 500,
                 customMenuBar:'<span class="amm-bar"></span>',
@@ -103,7 +108,11 @@ function fix_megamenu_flashing_on_mobile(){
              
             $navigation.aweMenu(awemenuSettings);
             //fix z-index contextual link
-            $navigation.parent().find('> div[data-contextual-id]').css('z-index',9999999);
+            var contextula_css = {'z-index' : 9999999};
+            if(settings.type == 'top'){
+                contextula_css.position = 'fixed';
+            }
+            $navigation.parent().find('> div[data-contextual-id]').css(contextula_css);
         });
     });
 })(jQuery);
