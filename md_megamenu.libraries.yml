@@ -36,5 +36,6 @@ megamenu.front:
   # Add js files
   header: true
   js:
+    assets/js/jquery.hoverIntent.min.js: {}
     assets/js/awemenu.js: {}
     assets/js/megamenu_front.js: {}

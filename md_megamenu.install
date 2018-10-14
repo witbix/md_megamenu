@@ -54,3 +54,17 @@ function md_megamenu_uninstall() {
   // Remove image style md_slider_thumb
   //ImageStyle::load('md_slider_thumb')->delete();
 }
+
+/**
+ * Add the new database field
+ */
+function md_megamenu_update_8105() {
+  $col = array(
+    'type' => 'blob',
+    'description' => "render style",
+    'not null' => FALSE
+  );
+ $schema = \Drupal\Core\Database\Database::getConnection()->schema();
+ $schema->addField('md_megamenu_items', 'rendered_style', $col);
+ \Drupal::logger('md_megamenu')->notice("update table md_megamenu_items 8105");
+}

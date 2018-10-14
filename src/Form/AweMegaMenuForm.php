@@ -8,7 +8,7 @@ namespace Drupal\md_megamenu\Form;
 
 use Drupal\awe_builder\AweBuilder\AweBuilderLibraries;
 use Drupal\awe_builder\AweBuilder\AweBuilderRender;
-use Drupal\awe_builder\AweBuilder\AweBuilderRenderStyle;
+use Drupal\md_megamenu\AweLib\MegamenuRenderStyle;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Cache\Cache;
@@ -75,13 +75,18 @@ class AweMegaMenuForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, $pid = '') {
     $form['#attached']['library'][] = 'md_megamenu/megamenu.admin';
+    $form['#attached']['drupalSettings']['md_megamenu_folder_url'] = drupal_get_path('module', 'md_megamenu');
     $form['#attached']['drupalSettings']['getPlaceBlock'] = $this->url('awe_builder.admin.place_block', [], ['absolute' => TRUE]);
     $form['#attached']['drupalSettings']['getListBlock'] = $this->url('awe_builder.admin.list_block', [], ['absolute' => TRUE]);
     $megamenuSkin = $this->aweLib->getMegamenuSkinConfig();
     $form['#attached']['drupalSettings']['megamenuSkin'] = $megamenuSkin;
-    if (\Drupal::hasService('md_fontello')) {
-      $fontello = \Drupal::service('md_fontello');
-      $libraries = $fontello->getListLibraries();
+    if (\Drupal::hasService('iconapi')) {
+      $iconapi = \Drupal::service('iconapi');
+    }else if (\Drupal::hasService('md_fontello')) {
+      $iconapi = \Drupal::service('md_fontello');      
+    }
+    if(isset($iconapi)){
+      $libraries = $iconapi->getListLibraries();
       foreach ($libraries as $library) {
         $form['#attached']['library'][] = $library;
       }
@@ -160,7 +165,7 @@ class AweMegaMenuForm extends FormBase {
       //ksm($list_deleted);
     }
     // Save css file
-    $style = new AweBuilderRenderStyle($data, "ac_wrap_menu-{$menu_name}");
+    $style = new MegamenuRenderStyle($data, "ac_wrap_menu-{$menu_name}");
     $css = $style->saveFileCss('menu', "md_menu_{$menu_name}");
     
     // save libraries
@@ -268,6 +273,7 @@ class AweMegaMenuForm extends FormBase {
         'title' => $item['title'],
         'type' => $type,
         'mid' => $item['mid'],
+        'rendered_style'=>json_encode($item['renderedStyle']),
         'data' => $data
       ];    
       if(!isset($existItems[$fields['mid']])){
