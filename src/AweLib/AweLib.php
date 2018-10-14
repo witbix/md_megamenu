@@ -2,10 +2,13 @@
 namespace Drupal\md_megamenu\AweLib;
 use Drupal\menu_link_content\Plugin\Menu\MenuLinkContent;
 use Drupal\Component\Serialization\Yaml;
+use Drupal\Core\Url;
+use Drupal\md_megamenu\AweLib\MegamenuRenderStyle;
 
 class AweLib{
   protected $connection;
-  
+  private static $menuboxSettings;
+      
   function __construct() {
     $this->connection = \Drupal::database();
   }
@@ -37,16 +40,22 @@ class AweLib{
       $href = '#';
       if($item['url']->isExternal()){
         $href = $item['url']->toString();
-      } else if ($item['url']->getRouteName() == '<front>') {
+      } else if(!$item['url']->isRouted() && $item['url']->getUri()){
+        $href = Url::fromUri($item['url']->getUri())->toString();
+      } else if ($item['url']->isRouted() && $item['url']->getRouteName() == '<front>') {
        $href = $item['url']->getRouteName();
-      } else if($item['url']->getRouteName() != '<none>'){
+      } else if($item['url']->isRouted() && $item['url']->getRouteName() != '<none>'){
         $href = $item['url']->toString();
-      }      
+      }
       
       if($item['original_link'] instanceof MenuLinkContent){
         $uuid = $item['original_link']->getDerivativeId();
-        $menuContent = current(\Drupal::entityTypeManager()->getStorage('menu_link_content')->loadByProperties(['uuid' => $uuid]));
-        $mid = $menuContent->id();
+        if($uuid){
+          $menuContent = current(\Drupal::entityTypeManager()->getStorage('menu_link_content')->loadByProperties(['uuid' => $uuid]));
+          $mid = $menuContent->id();
+        } else {
+          $mid = 'none';
+        }
       }else{        
         $mid = $item['original_link']->getPluginId();
         if(!$mid)
@@ -78,7 +87,7 @@ class AweLib{
         $existItem['data'] = json_decode($existItem['data'], true);
         if(!isset($menuItemSetting['main']['settings']['type']) || $menuItemSetting['main']['settings']['type'] != 'list'){
           $menuItemSetting['main']['settings']['type'] = $existItem['type'];
-          if($existItem['type'] == 'mega'){
+          if(!count($item['below']) && $existItem['type'] == 'mega'){
             $menuItem['content'] = $existItem['data']['content'];
             $menuItem['contentType'] = 'Sections';
           }else {
@@ -94,6 +103,10 @@ class AweLib{
           $itemSettings['main']['settings']['type'] = 'normal';
         $menuItem['settings'] = (string) json_encode($itemSettings);
         $menuItem['cid'] = $existItem['data']['cid'];
+        $menuItem['customStyles'] = (string) $existItem['data']['customStyles'];
+        if($existItem['rendered_style']){
+          $menuItem['renderedStyle'] = is_string($existItem['rendered_style']) ? json_decode($existItem['rendered_style'], true) : $existItem['rendered_style'];
+        }        
       } else if(count($item['below'])){
         $menuItemSetting['main']['settings']['type'] = 'list';
         $menuItem['settings'] = (string) json_encode($menuItemSetting);
@@ -106,7 +119,7 @@ class AweLib{
   
   function getBoxMenuSettings(){
     $defaultSettings = array(
-      'settings' => '{"main":{"settings":{"type":"standard","skin":"default","skin_color":"color-1","trigger_override":"hover","hover_time":0,"enable_sticky":false,"sticky_offset":0,"show_scroll_up":false,"enable_arrow_desktop":true,"animation_type":"fadeup","animation_duration":300,"enable_mobile":false,"m_type":"standard","responsive_width":768,"mobile_trigger":"click","enable_arrow_mobile":true,"mobile_animation_duration":300},"title":"Main"},"menu_bar":{"settings":{"container":"nav","fullwidth":false,"menubar_width":1170},"title":"Menu bar","selector":".awemenu-container"},"top_items":{"settings":{"text_align":"default","item_type":"text-only"},"title":"Top items","selector":"ul.awemenu > .awemenu-item > a"},"mega_submenu":{"settings":{"fullwidth":true,"mega_width":600,"set_height":"auto","mega_height":400},"title":"Mega submenu","selector":".awemenu-megamenu"},"flyout_submenu":{"settings":{"dropdown_width":250,"text_align":"default","item_type":"text-only"},"title":"Flyout submenu","selector":".awemenu-item .awemenu-item > a"}}',
+      'settings' => '{"main":{"settings":{"type":"standard","skin":"default","skin_color":"1","trigger_override":"hover","hover_time":0,"enable_sticky":false,"sticky_offset":0,"show_scroll_up":false,"enable_arrow_desktop":true,"animation_type":"fadeup","animation_duration":300,"enable_mobile":false,"m_type":"standard","responsive_width":768,"mobile_trigger":"click","enable_arrow_mobile":true,"mobile_animation_duration":300},"title":"Main"},"menu_bar":{"settings":{"container":"nav","fullwidth":false,"menubar_width":1170},"title":"Menu bar","selector":".awemenu-container"},"top_items":{"settings":{"text_align":"default","item_type":"text-only"},"title":"Top items","selector":"ul.awemenu > .awemenu-item > a"},"mega_submenu":{"settings":{"fullwidth":true,"mega_width":600,"set_height":"auto","mega_height":400},"title":"Mega submenu","selector":".awemenu-megamenu"},"flyout_submenu":{"settings":{"dropdown_width":250,"text_align":"default","item_type":"text-only"},"title":"Flyout submenu","selector":".awemenu-item .awemenu-item > a"}}',
       'title' => 'Menu Box',
       'defaultPart' => 'menu_bar',
       'machineName' => 'menubox',
@@ -148,6 +161,31 @@ class AweLib{
       $config['data'] = !empty($config['data']) ? Yaml::decode($config['data']) : array();
     }
     return $config;
+  }
+  
+  public static function setMenuboxSettings($settings){
+    self::$menuboxSettings = $settings;
+  }
+  
+  public static function getMenuboxSettings(){
+    return self::$menuboxSettings;
+  }
+  
+  /*
+   * get struct & content of mega menu
+   */
+  public function createCustomCssFileByMenuName($menu_name){
+    $data = \Drupal::config("md_megamenu.settings")->get("{$menu_name}_settings");
+    if(!$data){
+      $data = $this->getBoxMenuSettings();
+    }else{
+      $data = json_decode($data, true);
+    }
+    $data['content'] = $this->getMenuItemsByMenuName($menu_name);
+    // Save css file
+    $style = new MegamenuRenderStyle($data, "ac_wrap_menu-{$menu_name}");
+    $css = $style->saveFileCss('menu', "md_menu_{$menu_name}");
+    return $css;
   }
 }
 

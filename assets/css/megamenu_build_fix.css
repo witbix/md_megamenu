@@ -10,6 +10,12 @@ html body.awecontent-layout{
     margin-top: 0px !important;
     background-color: #eee;
 }
-#toolbar, #admin-menu, .awemenu-box-action{display: none;}
+body.awecontent-layout .awemenu-top, body.awecontent-layout .awemenu-outleft .awemenu, body.awecontent-layout .awemenu-outright .awemenu {
+  top: 26px; }
+
+body.awecontent-layout .awemenu-nav.awemenu-outleft > .ac_control, body.awecontent-layout .awemenu-nav.awemenu-outleft > .ac_inline-control {
+  left: auto;
+  right: 1px; }
+#toolbar, #admin-menu, #drupal-live-announce, .awemenu-box-action{display: none;}
 
 .ac_creating .awemenu-nav .awemenu-item > a {border-bottom: none}

@@ -22,9 +22,13 @@ class MDMegamenuController extends ControllerBase{
     $build['#attached']['library'][] = 'awe_builder/awe_builder.iframe';
     $build['#attached']['library'][] = 'md_megamenu/megamenu.front';
     $build['#attached']['library'][] = 'md_megamenu/megamenu.iframe';
-    if (\Drupal::hasService('md_fontello')) {
-      $fontello = \Drupal::service('md_fontello');
-      $libraries = $fontello->getListLibraries();
+    if (\Drupal::hasService('iconapi')) {
+      $iconapi = \Drupal::service('iconapi');
+    } else if (\Drupal::hasService('md_fontello')) {
+      $iconapi = \Drupal::service('md_fontello');      
+    }
+    if(isset($iconapi)){
+      $libraries = $iconapi->getListLibraries();
       foreach ($libraries as $library) {
         $build['#attached']['library'][] = $library;
       }

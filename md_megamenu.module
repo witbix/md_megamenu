@@ -113,7 +113,6 @@ function md_megamenu_preprocess_html(&$vars) {
     $vars['attributes']['class'][] = 'awecontent-layout';
   }
 }
-
 // hook_theme_suggestions_alter chay tat ca cac theme
 function md_megamenu_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
 }
@@ -130,9 +129,7 @@ function md_megamenu_theme_suggestions_block_alter(array &$suggestions, array $v
   $base_plugin_id = $variables['elements']['#base_plugin_id'];
   $system_menu_block = $base_plugin_id == 'system_menu_block';
   if($system_menu_block){
-    $id = $variables['elements']['#id'];
-    $block = Block::load($id);
-    $pluginId = $block->getPluginId();
+    $pluginId = $variables['elements']['#plugin_id'];    
     $pluginId = explode(':', $pluginId);
     $menu_machine_name = $pluginId[1];
     $enable = \Drupal::config('md_megamenu.settings')->get('enable_megamenu_' . $menu_machine_name);
@@ -148,8 +145,9 @@ function md_megamenu_preprocess_md_megamenu(&$variables) {
   $elements = \Drupal::service('plugin.manager.awe_element')->getListElement();
   $menuName = $variables['elements']['content']['#menu_name'];
   $menuData = Json::decode(\Drupal::config('md_megamenu.settings')->get($menuName.'_settings'));
-  $_SESSION['menuboxSettings'] = $menuData;
-  $_SESSION['menuboxSettings']['settings'] = Json::decode($_SESSION['menuboxSettings']['settings']);
+  $menuboxSettings = $menuData;
+  $menuboxSettings['settings'] = Json::decode($menuboxSettings['settings']);
+  AweLib::setMenuboxSettings($menuboxSettings);
   $menuData['content'] = $lib->getMenuItemsByMenuName($menuName);
   $data = AweBuilderRender::processData($menuData, $elements);
   //add contextual_links
@@ -165,13 +163,17 @@ function md_megamenu_preprocess_md_megamenu(&$variables) {
   $variables['#attached']['library'][] = 'awe_builder/awe_builder.frontend';
   $variables['#attached']['library'][] = 'md_megamenu/megamenu.front';
   $variables['#attached']['library'][] = "md_megamenu/md_menu_{$menuName}";
-  if (\Drupal::hasService('md_fontello')) {
-    $fontello = \Drupal::service('md_fontello');
-    $libraries = $fontello->getListLibraries();
+  if (\Drupal::hasService('iconapi')) {
+    $iconapi = \Drupal::service('iconapi');
+  }else if (\Drupal::hasService('md_fontello')) {
+    $iconapi = \Drupal::service('md_fontello');      
+  }
+  if(isset($iconapi)){
+    $libraries = $iconapi->getListLibraries();
     foreach ($libraries as $library) {
       $variables['#attached']['library'][] = $library;
     }
-  }  
+  }
 }
 
 /**
@@ -192,8 +194,11 @@ function md_megamenu_preprocess_md_menubox(&$vars) {
   $skinColor = $vars['main']['skin_color'];   
   $vars['attributes']['class'] = array_merge($vars['attributes']['class'], array(
     'awemenu-nav', 'js-awemenu-nav-front', 'awemenu-'.$skin, 'awemenu-'.$skin.'-color-'.$skinColor,
-    'awemenu-'.$menuType, $vars['el_wrap_class'], $vars['custom_classes'], 'awemenu-fix-mobile'
+    'awemenu-'.$menuType, $vars['el_wrap_class'], $vars['custom_classes'], 'not-remove-arrow'
   ));
+  if(isset($vars['main']['enable_mobile']) && $vars['main']['enable_mobile']){
+    $vars['attributes']['class'][] = 'awemenu-fix-mobile';
+  }
   
   // check logo
   $use_logo = \Drupal::config('md_megamenu.settings')->get('use_logo_' . $vars['menuName']);
@@ -281,7 +286,7 @@ function md_megamenu_preprocess_md_menu_item(&$vars) {
       AweBuilderRender::getAttributes($vars['attributes'], $main_settings['attributes']);
     }
     $attributesUl = array();
-    $menuboxSettings = $_SESSION['menuboxSettings']['settings'];
+    $menuboxSettings = AweLib::getMenuboxSettings()['settings'];
     $defaultTopItem = $menuboxSettings['top_items']['settings'];
     $defaultMegaSubmenu = $menuboxSettings['mega_submenu']['settings'];
     $defaultFlyoutSubmenu = $menuboxSettings['flyout_submenu']['settings'];
@@ -372,6 +377,20 @@ function md_megamenu_preprocess_md_menu_item(&$vars) {
           $attributesUl[] = "data-orientation = {$orientation}";
       }
     }
+    
+    
+    if($vars['level'] == 1 && !empty($vars['el_content'])){
+      $menuBoxType = $menuboxSettings['main']['settings']['type'];
+      if(in_array($menuBoxType, ['top', 'standard']))
+        $arrow = 'amm-down';
+      else if(in_array($menuBoxType, ['left', 'outleft']))
+          $arrow = 'amm-right';
+      else if(in_array($menuBoxType, ['right', 'outright']))
+          $arrow = 'amm-left';
+      else
+         $arrow = 'amm-up';
+      $vars['arrow'] = $arrow;
+    }
   
     $vars['attributesUl'] = $attributesUl;
   }
@@ -435,8 +454,10 @@ function md_megamenu_library_info_build() {
   $libraries = [];
   $library = \Drupal::config("md_megamenu.settings")->get("libraries");
   if($library){
+    $styleCustomPath = '/'.drupal_get_path('module', 'md_megamenu').'/assets/css/custom';
     $library = json_decode ($library, true);
-    foreach ($library as $menu_name => $data) {
+    $lib = new AweLib();
+    foreach ($library as $menu_name => &$data) {
       $libraries["md_menu_{$menu_name}"] = [
         'dependencies' => [
           'awe_builder/awe_builder.frontend'
@@ -446,9 +467,27 @@ function md_megamenu_library_info_build() {
         $libraries["md_menu_{$menu_name}"]['js'] = $data['js'];
       }
       if (isset($data['css'])) {
+        $cssfiles = array_keys($data['css']['theme']);
+        $customFile = $styleCustomPath."/md_menu_{$menu_name}.css";
+        if(!in_array($customFile, $cssfiles) || !file_exists(substr($customFile, 1))){
+          $customCss = $lib->createCustomCssFileByMenuName($menu_name);
+          $data['css']['theme'][$customCss] = [];
+          \Drupal::service('config.factory')->getEditable("md_megamenu.settings")->set("libraries", json_encode($library))->save();
+        }
         $libraries["md_menu_{$menu_name}"]['css'] = $data['css'];
       }
     }
   }
   return $libraries;
+}
+
+function md_megamenu_menu_link_content_insert(\Drupal\Core\Entity\EntityInterface $entity) {
+//  if($entity->isNew())
+//    dsm('new link');
+//  else
+//    dsm('update link');
+}
+
+function md_megamenu_menu_link_content_update(\Drupal\Core\Entity\EntityInterface $entity) {
+//  dsm('update link 2:');
 }
