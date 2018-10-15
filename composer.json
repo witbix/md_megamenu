@@ -10,6 +10,6 @@
         }
     ],
     "require": {
-        "witbix/awe_builder": "8.x-1.x-dev"
+        "witbix/awe_builder": "dev-bnc-theme"
     }
 }
