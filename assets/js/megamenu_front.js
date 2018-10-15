@@ -13,7 +13,7 @@ function fix_megamenu_flashing_on_mobile(){
                     mobileType = settings.m_type || 'standard';
                 $navigation.addClass('awemenu-mobile awemenu-mobile-' + mobileType).removeClass('awemenu-' + type);
                 if(!$('.awemenu-bars', $navigation).length)
-                    $navigation.find('> .awemenu-container').prepend('<div class="awemenu-bars"><span class="amm-bar"></span></div>');
+                    $navigation.find('> .awemenu-container').prepend('<div class="awemenu-bars"><span></span><span></span><span></span><span></span></div>');
             }
             // remvoe class awemenu-fix-mobile with all screen mode
             $navigation.removeClass('awemenu-fix-mobile');
